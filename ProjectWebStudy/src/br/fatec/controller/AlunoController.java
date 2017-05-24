@@ -25,7 +25,7 @@ public class AlunoController {
 		
 	public AlunoController()
 	{
-		//Construtor
+		//Construtor da classe aluno
 	}
 	
 	@PostConstruct

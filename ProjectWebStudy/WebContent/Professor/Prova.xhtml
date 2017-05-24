@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/favicon.png"/>
+<title>Prova</title>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49927407-1', 'ctssystem.com.br');
+  ga('send', 'pageview');
+
+</script>
+<script>
+// When the user clicks on div, open the popup
+function myFunction() {
+    var popup = document.getElementById('myPopup');
+    popup.classList.toggle('show');
+}
+</script>
+</h:head>
+<ui:decorate template="/Template/TemplateProfessor.xhtml">
+<ui:define name="page">
+<h:outputStylesheet library="css" name="PopupMessageStyle.css" />
+<h:form enctype="multipart/form-data">
+<div align="center">
+<table width="900" border="0" align="center" cellpadding="0" cellspacing="0">
+<!-- //validar - componente message é necessário para que a mensagem de erro seja exibida -->
+<tr><td align="left"><p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" escape="false" /></td></tr>
+<tr><td><center><h2>Cadastro de Prova</h2></center></td></tr>
+<tr><td align="left"><h3>Detalhes da Prova</h3></td></tr>
+</table>
+<script>
+function showGrpMemberSearchPageCalenderLeave() { 
+     window.open('./Questaolist.xhtml','mywindow', 'resizable=no,toolbar=no,scrollbars=yes,height=450,width=530,top=145,left=235');
+     return false;
+ }
+ 
+function PrintElem(elem, title)
+{
+	var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+    mywindow.document.write('<html><head><title>' + title  + '</title>');
+
+    mywindow.document.write('</head><body >');
+    
+    //Começo do cabeçalho
+    
+    mywindow.document.write('<p width="90%" style="line-height: 0.5; text-align: justify;">' + "Nome: __________________________________________________________   Turma:_____________<br />"  + '</p>');
+    mywindow.document.write('<p width="90%" style="line-height: 0.5; text-align: justify;">' + "Ciclo: _______   Disciplina: _______________________________________   Data: ____/____/_______<br />"  + '</p>');
+    mywindow.document.write('<p width="90%" style="line-height: 0.5; text-align: justify;">' + "Matrícula: _________________   Instituição: __________________________________   Nota: ________"  + '</p>');
+    //Fim do cabeçalho
+    
+    mywindow.document.write('<center><h1>' + title  + '</h1></center>');
+    mywindow.document.write(document.getElementById(elem).innerHTML);
+    mywindow.document.write('</body></html>');
+
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10*/
+
+    mywindow.print();
+    mywindow.close();
+
+    return true;
+}
+</script>
+<table width="900" border="0">
+<tr>
+	<td colspan="3" align="left" width="70%"><h:outputText value="Título:"/></td>
+</tr>
+<tr>
+	<td colspan="3" align="left" width="70%">
+		<p:inputText id="txtTitulo" value="#{provaController.newProva.titulo_prova}" style="width: 880px"/>
+		<p:focus for="txtTitulo" />
+	</td>
+</tr>
+<tr>
+	<td align="left"><h:outputText value="Disciplina:" /></td><td align="left" width="20%"><h:outputText value="Assunto:"/></td><td align="left" width="15%"><h:outputText value="Número de Questões:"/></td></tr>
+<tr>
+<td align="left">
+	<p:selectOneMenu maxlength="20" id="slmDisciplina" style="width: 344px; vertical-align: bottom;" value="#{provaController.newProva.disciplina_prova}" converter="entityConverter">
+			<f:selectItem itemLabel="Selecione uma disciplina" itemValue=""></f:selectItem>
+			<f:selectItems value="#{disciplinaController.disciplinas}" var="item" itemValue="#{item}" itemLabel="#{item.nome_disciplina}"/>
+	</p:selectOneMenu>
+	<input type="hidden" value="#{provaController.newProva.usuario_professor_prova}" />
+</td>
+<td align="left">
+    <p:selectOneMenu maxlength="20" id="slmAssunto" style="width: 302px; vertical-align: bottom;" value="#{provaController.newProva.assunto_prova}" converter="entityConverter">
+			<f:selectItem itemLabel="Selecione um assunto" itemValue=""></f:selectItem>
+			<f:selectItems value="#{assuntoController.assuntos}" var="itemAssunto" itemValue="#{itemAssunto}" itemLabel="#{itemAssunto.nome_assunto}"/>
+	</p:selectOneMenu>
+</td>
+<td align="left">
+	<p:inputMask mask="9?999" maxlength="4" value="#{provaController.newProva.numeroQuestoes_prova}" placeHolder=" " style="width: 215px;"/>
+</td>
+</tr>
+<tr>
+<td align="left">
+	<h:outputText value="Versão:" />
+</td>
+<td align="left">
+	<h:outputText value="Data de Criação:" />
+</td>
+<td align="left">
+	<h:outputText value="Data da Última Alteração:" />
+</td>
+</tr>
+<tr>
+<td align="left">
+	<p:inputText type="text" value="#{provaController.newProva.versao_prova}" style="width: 336px;" />
+</td>
+<td align="left">
+	<p:inputText type="text" value="#{provaController.newProva.data_criacao_prova}" disabled="true" style="width: 293px;">
+		<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" type="both" timeZone="America/Sao_Paulo" />
+	</p:inputText>
+</td>
+<td align="left">
+	<p:inputText type="text" value="#{provaController.newProva.data_ultima_alteracao_prova}" disabled="true" style="width: 215px;">
+		<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" type="both" timeZone="America/Sao_Paulo" />
+	</p:inputText>
+</td>
+</tr>
+
+<tr>
+	<td align="left"><h:outputText value="Questões a serem usadas:" /></td>
+</tr>
+<tr>
+<td align="left">
+	<p:selectOneMenu maxlength="20" id="slmQuestoesUsadas" style="width: 344px; vertical-align: bottom;" value="#{provaController.newProva.questoes_usadas_prova}" converter="entityConverter">
+			<f:selectItem itemLabel="Somente as minhas" itemValue="Somente as minhas"></f:selectItem>
+			<f:selectItem itemLabel="Todos os usuários" itemValue="Todos os usuários"></f:selectItem>
+	</p:selectOneMenu>
+	<input type="hidden" value="#{provaController.newProva.usuario_professor_prova}" />
+</td>
+</tr>
+
+</table>
+<br />
+<table border="0" style="width: 900px" align="center">
+	<tr><td align="right">
+		<p:commandButton id="btnGerar" value="Gerar Prova Automática" action="#{provaController.gerarProva}" update="pgQuestoes" ajax="true"/>&nbsp;
+		<p:commandButton id="btnEmbaralhar" value="Embaralhar Alternativas" action="#{provaController.embaralharAlternativas}" update="pgQuestoes" ajax="true"/>&nbsp;
+		<p:button id="btnImprimir" value="Imprimir" onclick="PrintElem('imprimirProva', '#{provaController.newProva.titulo_prova}')" />&nbsp;<br /><br /><br />
+	</td></tr>
+	<tr><td align="left">
+	<div id="imprimirProva">
+		<h:panelGroup id="pgQuestoes">
+			<ui:repeat id="rptQuestoes" value="#{provaController.questoes}" varStatus="statusQuestoes">
+				<p style="text-align: justify;"><p:outputLabel value="#{provaController.questoes[statusQuestoes.index].textobase_questao.texto_textobase}" style="width: 859px; text-align: justify;" styleClass="realizarProva" /></p>
+				<h:panelGroup rendered="#{not empty provaController.questoes[statusQuestoes.index].textobase_questao}">
+					<table align="right" border="0" cellpading="0" cellspacing="0">
+						<tr>
+							<td>
+								<p:outputLabel value="#{provaController.questoes[statusQuestoes.index].textobase_questao.autor_textobase.nome_autor}" style="width: 859px; text-align: right; font-size: 14px;" styleClass="realizarProva" />
+							</td>
+						</tr>
+					</table>
+					<br />
+				</h:panelGroup>
+				<p style="text-align: justify;"><p:outputLabel value="#{statusQuestoes.index + 1} -" />&nbsp;&nbsp;<p:outputLabel value="#{provaController.questoes[statusQuestoes.index].enunciado_questao}" style="width: 859px;" styleClass="realizarProva" /></p>
+				<ui:repeat id="rptAlternativas" value="#{provaController.questoes[statusQuestoes.index].alternativas_questao}" varStatus="statusAlternativas">
+					&nbsp;&nbsp;&nbsp;&nbsp;<p:outputLabel value="#{provaController.obterLetra(statusAlternativas.index + 1)} - " /><p:outputLabel value="#{provaController.questoes[statusQuestoes.index].alternativas_questao[statusAlternativas.index].texto_alternativa}" styleClass="realizarProva" /><br />
+				</ui:repeat>
+				<br />
+			</ui:repeat>
+		</h:panelGroup>
+	</div>
+	</td></tr>
+	<tr><td align="right">
+		<p:commandButton id="btnSalvar" value="Salvar" action="#{provaController.cadastrar}" rendered="#{provaController.showNewButton}" ajax="false"/>
+		<p:commandButton id="btnAlterar" value="Alterar" action="#{provaController.alterar}" rendered="#{!provaController.showNewButton}" ajax="false" />
+	</td></tr>
+</table>
+</div>
+</h:form>
+</ui:define>
+</ui:decorate>
+</html>
